@@ -1,0 +1,31 @@
+bool hasCycle(struct ListNode *head) 
+{
+	bool ret = false;
+
+    struct ListNode *slow_ptr = NULL;
+    struct ListNode *fast_ptr = NULL;
+
+	if(head == NULL)
+	{
+		ret = false;
+		goto end_of_function;
+	}
+
+	slow_ptr = head;
+	fast_ptr = head;
+    
+    while ( (fast_ptr != NULL) && (fast_ptr->next != NULL) ) 
+	{
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+        
+        if (slow_ptr == fast_ptr) 
+		{
+            ret = true;
+			goto end_of_function;
+        }
+    }
+
+end_of_function:
+    return ret;
+}
