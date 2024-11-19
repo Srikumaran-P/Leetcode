@@ -1,0 +1,22 @@
+int* getRow(int rowIndex, int* returnSize){
+
+
+        //challenge to use O(rowIndex) space
+        //at rowIndex, there are (rowIndex+1) space
+
+        int* ret = (int*)malloc(sizeof(int)*(rowIndex+1));
+        ret[0]=1; // base case on top
+        for (int i=1; i<rowIndex+1;i++){
+            ret[i]=1; //sets last index of current row to 1
+            int o=1;
+            for (int j=1; j<i;j++){ 
+                //sum up "prev row" index j-1 and j and put in j
+                //-> index j original value needs to be saved
+                ret[j] = o + ret[j];
+                o=ret[j]-o;
+            }
+        }
+
+        *returnSize=rowIndex+1;
+        return ret;
+}
