@@ -1,0 +1,64 @@
+#define MAX 200000
+
+typedef struct {
+    char message[MAX];
+    int topo;
+} PILHA;
+
+void init(PILHA* p) { p->topo = -1; }
+
+void push(PILHA* p, char letter) {
+    if (p->topo >= MAX)
+        return;
+    p->topo++;
+    p->message[p->topo] = letter;
+}
+
+void pop(PILHA* p) {
+    if (p->topo == -1)
+        return;
+    p->topo--;
+}
+
+void leitura(PILHA* p, char* s) {
+    int i = p->topo;
+    while (i >= 0) {
+        s[i] = p->message[i];
+        i--;
+    }
+    s[p->topo + 1] = '\0';
+}
+
+void clear(PILHA* p) { init(p); }
+
+int isPalindrome(char str[]) {
+    PILHA p;
+    init(&p);
+
+    int i, j;
+
+    for (i = 0; str[i] != '\0'; ++i) {
+        str[i] = tolower(str[i]);
+
+        if ((str[i] >= 'a' && str[i] <= 'z') ||
+            (str[i] >= '0' && str[i] <= '9')) {
+            push(&p, str[i]);
+        }
+    }
+
+    leitura(&p, str);
+
+    int low = 0;
+    int high = strlen(str) - 1;
+
+    while (low < high) {
+        if (str[low] != str[high]) {
+            return false;
+        }
+        low++;
+        high--;
+    }
+
+    clear(&p);
+    return true;
+}
